@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>WeMeet Meeting Page</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link rel="icon" href="img/tigerlogo.png" type="image/x-icon">
+
+    <!-- main css -->
+    <link href="css/style.css" rel="stylesheet">
+
+
+    <!-- modernizr -->
+    <script src="js/modernizr.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+     <!-- api gateway -->
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ 
+     <script type="text/javascript" src="js/apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
+     <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+     <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/rollups/sha256.js"></script>
+     <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/components/hmac.js"></script>
+     <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/components/enc-base64.js"></script>
+     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.879.0.min.js"></script>
+     <script type="text/javascript" src="js/apiGateway-js-sdk/lib/url-template/url-template.js"></script>
+     <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+     <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+     <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+     <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
+     <script type="text/javascript" src="js/apiGateway-js-sdk/apigClient.js"></script>
+     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.3.0.min.js"></script>
+</head>
+<body onload="findUserMeetings()">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="pre-container">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end Preloader -->
+
+    <div class="container-fluid">
+        <!-- box-header -->
+        <header class="box-header">
+            <div class="box-logo">
+                <a href="index.html"><img src="img/icon.png" width="130" alt="Logo"></a>
+            </div>
+            <!-- box-nav -->
+            <a class="box-primary-nav-trigger" href="#0">
+                <span class="box-menu-text">Menu</span><span class="box-menu-icon"></span>
+            </a>
+            <!-- box-primary-nav-trigger -->
+        </header>
+        <!-- end box-header -->
+
+        <!-- nav -->
+        <nav>
+            <ul class="box-primary-nav">
+                <li class="box-label">WeMeet</li>
+
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About me</a></li>
+                <li><a href="friend_list.html">Friends</a></li>
+                <li><a href="organize-meeting.html">Organize a meeting</a></li>
+                <li><a href="meeting.html">My meetings</a><i class="ion-ios-circle-filled color"></i></li>
+                <li><a href="contact.html">contact me</a> </li>
+
+
+
+                <li class="box-label">Follow Us</li>
+
+                <li class="box-social"><a href="#0"><i class="ion-social-facebook"></i></a></li>
+                <li class="box-social"><a href="#0"><i class="ion-social-instagram-outline"></i></a></li>
+                <li class="box-social"><a href="#0"><i class="ion-social-twitter"></i></a></li>
+                <li class="box-social"><a href="#0"><i class="ion-social-dribbble"></i></a></li>
+            </ul>
+        </nav>
+        <!-- end nav -->
+    </div>
+
+    <!-- top bar -->
+    <div class="top-bar">
+        <h1>My Meetings</h1>
+        <p><a href="index.html">Home</a> / My meetings</p>
+    </div>
+    <!-- end top bar -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="title-container">
+                    <h3> Upcoming Meetings</h3>
+                </div>
+
+                <div class="people-nearby" id="meeting-info">
+
+                  <!-- <div class="nearby-user">
+                    <div class="row">
+                      <div class="col-md-2 col-sm-2">
+                          <h4>Meeting 1</h4>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <h5 class="h5-black">Host: <a href="#" class="profile-link">Sophia Page</a></h5>
+                        <h5 class="h5-black">Participants:</h5> 
+                        <a href="#" class="profile-link">Diana Amber</a>, 
+                        <a href="#" class="profile-link">Lukas Wang</a>,   
+                        <a href="#" class="profile-link">Lady M</a>, 
+                        <a href="#" class="profile-link">Diana Amber</a>
+                        <p></p>
+                        <h5 class="h5-black">Current Set Time: <p class="text-muted p-inline text-important">00:00</p></h5>
+                        <h5 class="h5-black">Vote Status: <p class="text-muted p-inline text-important">Y/S</p></h5>
+                        <h5 class="h5-black">Location: <p class="text-muted p-inline">link</p></h5>
+                        <h5 class="h5-black">Description: <p class="text-muted p-inline">For Cloud Computing</p></h5>
+                        
+                      </div>
+                      <div class="col-md-3 col-sm-3">
+                        <a href="meeting-timeslot.html" class="btn btn-box">Choose your available timeslots</a>
+                      </div>
+                    </div>
+                  </div> -->
+
+
+                  <!-- <div class="nearby-user">
+                    <div class="row">
+                      <div class="col-md-2 col-sm-2">
+                          <h4>Meeting 2</h4>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <h5 class="h5-black">Host: <a href="#" class="profile-link">Lady M</a></h5>
+                        <h5 class="h5-black">Participants:</h5> 
+                        <a href="#" class="profile-link">Diana Amber</a>, 
+                        <a href="#" class="profile-link">Jonathon Thompson</a>,   
+                        <a href="#" class="profile-link">Olivia Steward</a>, 
+                        <a href="#" class="profile-link">Elena Foster</a>
+                        <p></p>
+                        <h5 class="h5-black">Current Set Time: <p class="text-muted p-inline text-important">00:00</p></h5>
+                        <h5 class="h5-black">Vote Status: <p class="text-muted p-inline text-important">Y/S</p></h5>
+                        <h5 class="h5-black">Location: <p class="text-muted p-inline">link</p></h5>
+                        <h5 class="h5-black">Description: <p class="text-muted p-inline">For another Cloud Computing</p></h5>
+                        
+                      </div>
+                      <div class="col-md-3 col-sm-3">
+                        <a href="meeting-timeslot.html" class="btn btn-box">Choose your available timeslots</a>
+                      </div>
+                    </div>
+                  </div> -->
+
+
+                  <!-- <div class="nearby-user">
+                    <div class="row">
+                      <div class="col-md-2 col-sm-2">
+                          <h4>Meeting 3</h4>
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <h5 class="h5-black">Host: <a href="#" class="profile-link">Sophia Page</a></h5>
+                        <h5 class="h5-black">Participants:</h5> 
+                        <a href="#" class="profile-link">Brian Walton</a>, 
+                        <a href="#" class="profile-link">Lukas Wang</a>,   
+                        <a href="#" class="profile-link">Lady M</a>, 
+                        <a href="#" class="profile-link">Diana Amber</a>
+                        <p></p>
+                        <h5 class="h5-black">Current Set Time: <p class="text-muted p-inline text-important">00:00</p></h5>
+                        <h5 class="h5-black">Vote Status: <p class="text-muted p-inline text-important">Y/S</p></h5>
+                        <h5 class="h5-black">Location: <p class="text-muted p-inline">link</p></h5>
+                        <h5 class="h5-black">Description: <p class="text-muted p-inline">For another another Cloud Computing</p></h5>
+                        
+                      </div>
+                      <div class="col-md-3 col-sm-3">
+                        <a href="meeting-timeslot.html" class="btn btn-box">Change your available timeslots</a>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+
+                <!-- <div class="title-container">
+                    <h3> Settled Meetings (Ready to start)</h3>
+                </div>
+                <div class="people-nearby">
+
+                    <div class="nearby-user">
+                        <div class="row">
+                          <div class="col-md-2 col-sm-2">
+                              <h4>Meeting 4</h4>
+                          </div>
+                          <div class="col-md-10 col-sm-10">
+                            <h5 class="h5-black">Host: <a href="#" class="profile-link">Sophia Page</a></h5>
+                            <h5 class="h5-black">Participants:</h5> 
+                            <a href="#" class="profile-link">Brian Walton</a>, 
+                            <a href="#" class="profile-link">Lukas Wang</a>,   
+                            <a href="#" class="profile-link">Lady M</a>, 
+                            <a href="#" class="profile-link">Diana Amber</a>
+                            <p></p>
+                            <h5 class="h5-black">Time: <p class="text-muted p-inline">May 12, 2022, 9:00 PM (GMT-4)</p></h5>
+                            <h5 class="h5-black">Location: <p class="text-muted p-inline">link</p></h5>
+                            <h5 class="h5-black">Description: <p class="text-muted p-inline">For another another another Cloud Computing</p></h5>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="nearby-user">
+                        <div class="row">
+                          <div class="col-md-2 col-sm-2">
+                              <h4>Meeting 5</h4>
+                          </div>
+                          <div class="col-md-10 col-sm-10">
+                            <h5 class="h5-black">Host: <a href="#" class="profile-link">Sophia Page</a></h5>
+                            <h5 class="h5-black">Participants:</h5> 
+                            <a href="#" class="profile-link">Brian Walton</a>, 
+                            <a href="#" class="profile-link">Lady M</a>, 
+                            <a href="#" class="profile-link">Diana Amber</a>
+                            <p></p>
+                            <h5 class="h5-black">Time: <p class="text-muted p-inline">May 16, 2022, 9:00 PM (GMT-4)</p></h5>
+                            <h5 class="h5-black">Location: <p class="text-muted p-inline">link</p></h5>
+                            <h5 class="h5-black">Description: <p class="text-muted p-inline">For another another another another Cloud Computing</p></h5>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- footer -->
+    <footer>
+        <div class="container-fluid">
+            <p class="copyright">© Lukas Wang 2022</p>
+        </div>
+    </footer>
+    <!-- end footer -->
+
+    <!-- back to top -->
+    <a href="#0" class="cd-top"><i class="ion-android-arrow-up"></i></a>
+    <!-- end back to top -->
+
+    <!-- jQuery -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <!--  plugins -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/animated-headline.js"></script>
+    <script src="js/isotope.pkgd.min.js"></script>
+
+
+    <!--  custom script -->
+    <script src="js/custom.js"></script>
+
+
+     <!-- api gateway -->
+     <script src="js/index.js"></script>
+
+
+</body>
