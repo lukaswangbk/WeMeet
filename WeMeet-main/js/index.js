@@ -172,10 +172,52 @@ function doCreateMeeting(c_duration,c_host,c_location,c_description,c_participan
             // error callback
             console.log(result);
         });
+    alert("Creation Succeed!");
+    // window.location.href="meeting.html";
 }
 
 function onload_test(){
     console.log("test onloading");
+}
+
+function calendarSet(){
+    const days = [1,2,3,4,5,6,7]
+    const hours = [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+    var res_html = ""
+    for(var d=0; d<days.length; d++){
+        for(var h=0; h<hours.length; h++){
+            var meet_date =  new Date();
+            meet_date.setDate(today.getDate() + days[d]);
+            meet_date = meet_date.toISOString().split("T")[0] + " " + hours[h] + ":00 (next "+days[d]+" day)";
+            
+            var label = days[d] + ":" + hours[h];
+            res_html += 
+                '<div class="inputGroup">'
+                +'<input class="checkbox-calendar" id="option'+label+'" value="'+label+'" type="checkbox"/>'
+                +'<label for="option'+label+'">'+meet_date+'</label>'
+                +'</div>'
+        }
+    }
+    document.getElementById("calendar-form").innerHTML=res_html;
+}
+
+function saveCalendar(){
+
+    var uID = localStorage.getItem("ID")
+    var day = "";
+    var time = "";
+
+    var checkedTime = document.querySelectorAll('.checkbox-calendar:checked');
+    for (var i = 0; i < checkedTime.length; i++) {
+        day += checkedTime[i].value.split(":")[0]+",";
+        time += checkedTime[i].value.split(":")[1]+",";
+    }
+    day = day.slice(0, -1);
+    time = time.slice(0, -1);
+    
+    console.log(uID, day, time)
+    // doSaveCalendar(uID, day, time)
+    window.location.href="about.html";
 }
 
 function findUserMeetings(){

@@ -48,7 +48,7 @@
 
 </head>
 
-<body>
+<body onload="calendarSet()">
 
     <!-- Preloader -->
     <div id="preloader">
@@ -77,26 +77,23 @@
         
         <!-- nav -->
         <nav>
-          <ul class="box-primary-nav">
-              <li class="box-label">WeMeet</li>
+            <ul class="box-primary-nav">
+                <li class="box-label">WeMeet</li>
+                
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About me</a> <i class="ion-ios-circle-filled color"></i></li>
+                <li><a href="friend_list.html">Friends</a></li>
+                <li><a href="contact.html">contact me</a></li>
 
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About me</a><i class="ion-ios-circle-filled color"></i></li>
-              <li><a href="friend_list.html">Friends</a></li>
-              <li><a href="organize-meeting.html">Organize a meeting</a></li>
-              <li><a href="meeting.html">My meetings</a></li>
-              <li><a href="contact.html">contact me</a> </li>
+                <li class="box-label">Follow me</li>
 
-
-              <li class="box-label">Follow Us</li>
-
-              <li class="box-social"><a href="#0"><i class="ion-social-facebook"></i></a></li>
-              <li class="box-social"><a href="#0"><i class="ion-social-instagram-outline"></i></a></li>
-              <li class="box-social"><a href="#0"><i class="ion-social-twitter"></i></a></li>
-              <li class="box-social"><a href="#0"><i class="ion-social-dribbble"></i></a></li>
-          </ul>
-      </nav>
-      <!-- end nav -->
+                <li class="box-social"><a href="#0"><i class="ion-social-facebook"></i></a></li>
+                <li class="box-social"><a href="#0"><i class="ion-social-instagram-outline"></i></a></li>
+                <li class="box-social"><a href="#0"><i class="ion-social-twitter"></i></a></li>
+                <li class="box-social"><a href="#0"><i class="ion-social-dribbble"></i></a></li>
+            </ul>
+        </nav>
+        <!-- end nav -->  
     </div>
     
     <!-- Top bar -->
@@ -160,62 +157,24 @@
                   </div>
                 </div>
                 <div class="col-md-8">
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Full Name</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          Kenneth Valdez
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Email</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          fip@jukmuh.al
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Phone</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          (239) 816-9029
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Mobile</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          (320) 380-4539
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Address</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                          Bay Area, San Francisco, CA
-                        </div>
-                      </div>
-                      <hr>
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <a class="btn btn-box " href="portfolio-edit.html">Edit</a>
-                          <hr>
-                          <a class="btn btn-box " href="about-timeslot.html">Choose your available slots</a>
-                        </div>
-                      </div>
+                  <center>
+                  <div class="people-nearby calendar-container">
+                    
+                    <div class="calendar-content">
+                    <form class="form" id="calendar-form">
+                      <!-- insert with index.js -->
+                    </form>
                     </div>
+                  
                   </div>
+                </center>
+                  <div class="row">
+                    <center>
+                        <!-- <div class="col-md-6"> -->
+                            <button class="btn btn-box" onclick="saveCalendar()">Save</button>
+                        <!-- </div> -->
+                    </center>
+                </div>
     
               </div>
     
