@@ -12,6 +12,31 @@ var apigClient = apigClientFactory.newClient({
     apiKey: 'WFY7aanS24uJZxz05XHo4o1wN7zSszFaOGeg7Ok5'
 });
 
+function checkLogin(){
+    var uID = localStorage.getItem("ID");
+    if(!uID){
+        alert("Please Log in!")
+        window.location.href="index.html";
+    }
+}
+
+function aboutMe(){
+    var uID = localStorage.getItem("ID");
+    if(!uID){
+        alert("Please Log in!")
+        window.location.href="index.html";
+    }
+    else{
+        document.getElementById("userName").innerHTML=uID;
+    }
+    
+}
+
+function logOut(){
+    localStorage.clear();
+    window.location.href="index.html";
+}
+
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
@@ -91,31 +116,33 @@ function doUserLogin(user_id,user_password){
             console.log("Result : ", result);
             data = result["data"]
             console.log(data)
+
+            localStorage.setItem("ID", user_id);
+            window.location.href="index.html";
        
         }).catch(function(result) {
             // error callback
             console.log(result);
         });
-        localStorage.setItem("ID", user_id);
-        window.location.href="index.html";
+        
 }
 
-//要改 晚点改
 function editProfile(){
-    var edit_input_id = document.getElementById('edit_user_id');
-    console.log(edit_input_id)
-    var edit_input_name=document.getElementById('edit_user_name');
-    console.log(edit_input_name)
-    if (!edit_input_id.value) {
-        alert('Please Enter ID!');
-    } else {
-        edit_input_id_value = edit_input_id.value;
-        edit_input_id.value = "";
-        edit_input_name_value = edit_input_name.value;
-        edit_input_name.value = "";
-        // alert(search_input_value);
-        doEditProfile(edit_input_id_value,edit_input_name_value);
-    }
+    window.location.href="about.html";
+    // var edit_input_id = document.getElementById('edit_user_id');
+    // console.log(edit_input_id)
+    // var edit_input_name=document.getElementById('edit_user_name');
+    // console.log(edit_input_name)
+    // if (!edit_input_id.value) {
+    //     alert('Please Enter ID!');
+    // } else {
+    //     edit_input_id_value = edit_input_id.value;
+    //     edit_input_id.value = "";
+    //     edit_input_name_value = edit_input_name.value;
+    //     edit_input_name.value = "";
+    //     // alert(search_input_value);
+    //     doEditProfile(edit_input_id_value,edit_input_name_value);
+    // }
 };
 
 function doEditProfile(edit_id,edit_name){
@@ -233,6 +260,7 @@ function onload_test(){
 }
 
 function calendarSet(){
+    aboutMe();
     const days = [1,2,3,4,5,6,7]
     const hours = [9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
     var res_html = ""
@@ -292,6 +320,7 @@ function doSaveCalendar(a, c, d){
             console.log("Result : ", result);
             data = result["data"]
             console.log(data)
+            window.location.href="index.html";
        
         }).catch(function(result) {
             // error callback
@@ -305,7 +334,14 @@ function doSaveCalendar(a, c, d){
 function findUserMeetings(){
     var user_current_id =  localStorage.getItem("ID"); //static variable maybe.
     console.log("UserID: ", user_current_id);
-    doFindUserMeetings(user_current_id);
+    if(user_current_id){
+        doFindUserMeetings(user_current_id);
+    }
+    else{
+        alert("Please log in!")
+        window.location.href="index.html";
+    }
+    
 };
 
 function doFindUserMeetings(cur_id){
@@ -346,6 +382,7 @@ function doFindUserMeetings(cur_id){
                         +'<h5 class="h5-black">Host: <p class="text-muted p-inline text-blue">'+info["host"]+'</p></h5>'
                         +'<h5 class="h5-black">Participants: <p class="text-muted p-inline text-blue">'+info["participants"]+'</p></h5>' 
                         +'<h5 class="h5-black">Current Set Time: <p class="text-muted p-inline text-important">'+meet_date+'</p></h5>'
+                        +'<h5 class="h5-black">Duration: <p class="text-muted p-inline">'+info["duration"]+'</p></h5>'
                         +'<h5 class="h5-black">Vote Status: <p class="text-muted p-inline text-important">'+info["vote_status"]+'</p></h5>'
                         +'<h5 class="h5-black">Location: <p class="text-muted p-inline text-blue">'+info["location"]+'</p></h5>'
                         +'<h5 class="h5-black">Description: <p class="text-muted p-inline text-blue">'+info["description"]+'</p></h5>'
@@ -463,7 +500,7 @@ function voteMeeting(){
     // console.log(time)
     console.log(uID, mID, day, time)
     doVoteMeeting(uID, mID, day, time);
-    window.location.href="meeting.html";
+    // console.log("success")
 }
 
 function doVoteMeeting(a,b,c,d){
@@ -485,6 +522,7 @@ function doVoteMeeting(a,b,c,d){
             console.log("Result : ", result);
             data = result["data"]
             console.log(data)
+            window.location.href="meeting.html";
        
         }).catch(function(result) {
             // error callback
@@ -494,11 +532,38 @@ function doVoteMeeting(a,b,c,d){
 
 
 function sendEmail(){
+    var name=document.getElementById('contact_name')
+    console.log(name.value)
+    var object = document.getElementById('contact_object');
+    console.log(object.value)
+    var message=document.getElementById('contact_message')
+    console.log(message.value)
+
+    if (!name.value) {
+        alert('Please Enter Name!');
+    } 
+    else if (!object.value){
+        alert('Please Enter Subject');
+    }
+    else if (!message.value){
+        alert('Please Enter Message');
+    }
+    else {
+        name_value = name.value;
+        name.value = "";
+        object_value = object.value;
+        object.value = "";
+        msg_value = message.value;
+        message.value = "";
+
+        doSendEmail(name_value, object_value, msg_value);
+       }
     
-    doSendEmail(name, subject, message);
+    
 }
 
 function doSendEmail(a,c,d){
+    console.log(a,c,d)
     var params={};
     var bodystr = {
             "name":a,
