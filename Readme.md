@@ -42,7 +42,7 @@ This is a class project of COLUMBIA UNIVERSITY COMS 6998 CLOUD COMPUTING
 <summary>
 🍭 <strong>Main page</strong>
 </summary>
-<img src="" />
+<img src="/WeMeet-main/img/demo/homwpage.gif"/>
 </details>
 
 <br/>
