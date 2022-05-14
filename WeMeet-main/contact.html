@@ -113,32 +113,26 @@
         <div class="col-md-6">
             <form action="#" method="post">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="input-contact">
-                            <input type="text" name="name">
+                            <input type="text" name="name" id="contact_name">
                             <span>your name</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-contact">
-                            <input type="text" name="email">
-                            <span>your email</span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="input-contact">
-                            <input type="text" name="object">
+                            <input type="text" name="object" id="contact_object">
                             <span>object</span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="textarea-contact">
-                            <textarea name="message"></textarea>
+                            <textarea name="message" id="contact_message"></textarea>
                             <span>message</span>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <a href="#" class="btn btn-box">Send</a>
+                        <button class="btn btn-box" onclick="sendEmail()">Send</button>
                     </div>
                 </div>
             </form>
@@ -162,7 +156,7 @@
     <!-- footer -->
     <footer>
         <div class="container-fluid">
-            <p class="copyright">© Lukas Wang 2022</p>
+            <p class="copyright">© In The Cloud 2022</p>
         </div>
     </footer>
     <!-- end footer -->

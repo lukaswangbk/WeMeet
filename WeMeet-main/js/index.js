@@ -1,9 +1,59 @@
 const today = new Date();
+// $(window).unload(function(){
+//     localStorage.removeItem("ID");
+//   });
+// window.onbeforeunload = function() {
+//     localStorage.removeItem("ID");
+//     return '';
+//   };
 
 var apigClient = apigClientFactory.newClient({
     region: 'us-east-1', // OPTIONAL: The region where the API is deployed, by default this parameter is set to us-east-1
     apiKey: 'WFY7aanS24uJZxz05XHo4o1wN7zSszFaOGeg7Ok5'
 });
+
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+function friendList(){
+    var params={};
+    var body = {};
+    var additionalParams = {};
+
+    var res_html = ""
+
+    apigClient.findallusersGet(params, body, additionalParams)
+        .then(function(result) {
+            // success callback
+            console.log("Result : ", result);
+            data = result["data"]
+            console.log(data)
+
+            for(var i=0; i<data.length; i++){
+                console.log(data[i]);
+
+                var graph = randomIntFromInterval(1, 7)
+                console.log(graph)
+                res_html += 
+                '<div class="nearby-user">'
+                    +'<div class="row">'
+                        +'<div class="col-md-2 col-sm-2">'
+                            +'<img src="https://bootdey.com/img/Content/avatar/avatar'+graph+'.png" alt="user" class="profile-photo-lg">'
+                        +'</div>'
+                        +'<div class="col-md-7 col-sm-7">'
+                            +'<h4>'+data[i]+'</h4>'
+                        +'</div>'
+                    +'</div>'
+              +'</div>'
+            }
+            document.getElementById("friend-list").innerHTML = res_html;
+       
+        }).catch(function(result) {
+            // error callback
+            console.log(result);
+        });
+}
 
 
 
@@ -167,13 +217,15 @@ function doCreateMeeting(c_duration,c_host,c_location,c_description,c_participan
             console.log("Result : ", result);
             data = result["data"]
             console.log(data)
+
+            alert("Creation Succeed!");
+            window.location.href="meeting.html";
        
         }).catch(function(result) {
             // error callback
             console.log(result);
         });
-    alert("Creation Succeed!");
-    // window.location.href="meeting.html";
+    
 }
 
 function onload_test(){
@@ -182,7 +234,7 @@ function onload_test(){
 
 function calendarSet(){
     const days = [1,2,3,4,5,6,7]
-    const hours = [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+    const hours = [9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
     var res_html = ""
     for(var d=0; d<days.length; d++){
         for(var h=0; h<hours.length; h++){
@@ -216,12 +268,43 @@ function saveCalendar(){
     time = time.slice(0, -1);
     
     console.log(uID, day, time)
-    // doSaveCalendar(uID, day, time)
-    window.location.href="about.html";
+    doSaveCalendar(uID, day, time)
+    // window.location.href="about.html";
 }
+
+function doSaveCalendar(a, c, d){
+    // API post
+
+    var params={};
+    var bodystr = {
+            "user":a,
+            "day":c,
+            "time":d
+           
+    };
+    body=JSON.stringify(bodystr)
+    console.log(body)
+    var additionalParams = {};
+
+    apigClient.setusertimePost(params, body, additionalParams)
+        .then(function(result) {
+            // success callback
+            console.log("Result : ", result);
+            data = result["data"]
+            console.log(data)
+       
+        }).catch(function(result) {
+            // error callback
+            console.log(result);
+        });
+}
+
+
+
 
 function findUserMeetings(){
     var user_current_id =  localStorage.getItem("ID"); //static variable maybe.
+    console.log("UserID: ", user_current_id);
     doFindUserMeetings(user_current_id);
 };
 
@@ -241,6 +324,8 @@ function doFindUserMeetings(cur_id){
             var data = result["data"];
             var idx = 1;
 
+            console.log("data: ", data);
+
             while(data["Meeting"+idx]!=undefined){
                 console.log(data["Meeting"+idx]);
 
@@ -255,7 +340,7 @@ function doFindUserMeetings(cur_id){
                 '<div class="nearby-user">'
                     +'<div class="row">'
                       +'<div class="col-md-2 col-sm-2">'
-                          +'<h4>Meeting '+idx+'</h4>'
+                          +'<h4>Meeting #'+info["meetid"]+'</h4>'
                       +'</div>'
                       +'<div class="col-md-7 col-sm-7">'
                         +'<h5 class="h5-black">Host: <p class="text-muted p-inline text-blue">'+info["host"]+'</p></h5>'
@@ -267,7 +352,7 @@ function doFindUserMeetings(cur_id){
                         
                       +'</div>'
                       +'<div class="col-md-3 col-sm-3">'
-                        +'<a href="meeting-timeslot.html?meeting-idx='+idx+'&host='+info["host"]+'" class="btn btn-box">Choose your available timeslots</a>'
+                        +'<a href="meeting-timeslot.html?meeting-idx='+info["meetid"]+'&host='+info["host"]+'" class="btn btn-box">Choose your available timeslots</a>'
                       +'</div>'
                     +'</div>'
                   +'</div>';
@@ -297,7 +382,7 @@ function doRecommendTimeSlot(){
     var host = query[1].split("=")[1]
     console.log(mID, host)
 
-    document.getElementById("meeting-title").innerHTML="For meeting "+mID
+    document.getElementById("meeting-title").innerHTML="For meeting #"+mID
     document.getElementById("meeting-title-host").innerHTML="Host: "+host
 
     var params = {'mID' : mID};
@@ -395,6 +480,37 @@ function doVoteMeeting(a,b,c,d){
     var additionalParams = {};
 
     apigClient.votemeetingPost(params, body, additionalParams)
+        .then(function(result) {
+            // success callback
+            console.log("Result : ", result);
+            data = result["data"]
+            console.log(data)
+       
+        }).catch(function(result) {
+            // error callback
+            console.log(result);
+        });
+}
+
+
+function sendEmail(){
+    
+    doSendEmail(name, subject, message);
+}
+
+function doSendEmail(a,c,d){
+    var params={};
+    var bodystr = {
+            "name":a,
+            "subject":c,
+            "message":d
+           
+    };
+    body=JSON.stringify(bodystr)
+    console.log(body)
+    var additionalParams = {};
+
+    apigClient.sendemailPost(params, body, additionalParams)
         .then(function(result) {
             // success callback
             console.log("Result : ", result);

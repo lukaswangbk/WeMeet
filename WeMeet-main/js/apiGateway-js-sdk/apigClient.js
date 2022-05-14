@@ -119,39 +119,39 @@ apigClientFactory.newClient = function (config) {
     };
     
     
-    apigClient.editprofileGet = function (params, body, additionalParams) {
-        if(additionalParams === undefined) { additionalParams = {}; }
-        
-        apiGateway.core.utils.assertParametersDefined(params, ['uFN', 'uID'], ['body']);
-        
-        var editprofileGetRequest = {
-            verb: 'get'.toUpperCase(),
-            path: pathComponent + uritemplate('/editprofile').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
-            headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['uFN', 'uID']),
-            body: body
-        };
-        
-        
-        return apiGatewayClient.makeRequest(editprofileGetRequest, authType, additionalParams, config.apiKey);
-    };
-    
-    
-    apigClient.editprofileOptions = function (params, body, additionalParams) {
+    apigClient.findallusersGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
         apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
         
-        var editprofileOptionsRequest = {
-            verb: 'options'.toUpperCase(),
-            path: pathComponent + uritemplate('/editprofile').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+        var findallusersGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/findallusers').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
             queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
             body: body
         };
         
         
-        return apiGatewayClient.makeRequest(editprofileOptionsRequest, authType, additionalParams, config.apiKey);
+        return apiGatewayClient.makeRequest(findallusersGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.findallusersOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var findallusersOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/findallusers').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(findallusersOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     
@@ -260,6 +260,78 @@ apigClientFactory.newClient = function (config) {
         
         
         return apiGatewayClient.makeRequest(loginstatusOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.sendemailPost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['body'], ['body']);
+        
+        var sendemailPostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/sendemail').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(sendemailPostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.sendemailOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var sendemailOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/sendemail').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(sendemailOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.setusertimePost = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['body'], ['body']);
+        
+        var setusertimePostRequest = {
+            verb: 'post'.toUpperCase(),
+            path: pathComponent + uritemplate('/setusertime').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(setusertimePostRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.setusertimeOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var setusertimeOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/setusertime').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(setusertimeOptionsRequest, authType, additionalParams, config.apiKey);
     };
     
     
